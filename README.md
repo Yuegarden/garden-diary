@@ -1,3 +1,3 @@
-# Yue Garden Diary v3.1
+# Yue Garden Diary v3.2
 
-修复：顶部标签页点击切换。
+新增：中文 / English 双语切换，选择会自动保存。

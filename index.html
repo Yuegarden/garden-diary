@@ -15,14 +15,14 @@
         <h1>Garden Diary</h1>
         <p id="todayText" class="sub"></p>
       </div>
-      <button id="exportBtn" class="ghost">导出备份</button>
+      <div class="hero-actions"><button id="langToggle" class="ghost">EN</button><button id="exportBtn" class="ghost" data-i18n="export">导出备份</button></div>
     </header>
 
     <nav class="tabs" aria-label="主导航">
-      <button class="tab active" data-view="dashboard">今日</button>
-      <button class="tab" data-view="plants">植物</button>
-      <button class="tab" data-view="map">地图</button>
-      <button class="tab" data-view="timeline">日志</button>
+      <button class="tab active" data-view="dashboard" data-i18n="tab_today">今日</button>
+      <button class="tab" data-view="plants" data-i18n="tab_plants">植物</button>
+      <button class="tab" data-view="map" data-i18n="tab_map">地图</button>
+      <button class="tab" data-view="timeline" data-i18n="tab_log">日志</button>
       <button class="tab" data-view="niania">Niania</button>
     </nav>
 
@@ -30,49 +30,49 @@
       <section id="dashboard" class="view active">
         <div class="grid two">
           <article class="card weather-card">
-            <div class="card-head"><h2>今日天气｜Ripley</h2><button id="refreshWeather" class="small">刷新</button></div>
+            <div class="card-head"><h2><span data-i18n="weather_title">今日天气｜Ripley</span></h2><button id="refreshWeather" class="small"><span data-i18n="refresh">刷新</span></button></div>
             <div id="weatherBox" class="weather-box">正在获取天气...</div>
           </article>
           <article class="card">
-            <h2>今日重点</h2>
+            <h2><span data-i18n="highlights">今日重点</span></h2>
             <ul id="highlights" class="pretty-list"></ul>
           </article>
         </div>
         <article class="card">
-          <div class="card-head"><h2>今日养护任务</h2><button id="markDiary" class="small">记录今日巡园</button></div>
+          <div class="card-head"><h2><span data-i18n="tasks">今日养护任务</span></h2><button id="markDiary" class="small"><span data-i18n="mark_patrol">记录今日巡园</span></button></div>
           <div id="taskList" class="tasks"></div>
         </article>
         <div class="grid two">
-          <article class="card"><h2>本周施肥提醒</h2><div id="fertilizerTips"></div></article>
-          <article class="card"><h2>本周修剪提醒</h2><div id="pruneTips"></div></article>
+          <article class="card"><h2><span data-i18n="fertilizer">本周施肥提醒</span></h2><div id="fertilizerTips"></div></article>
+          <article class="card"><h2><span data-i18n="pruning">本周修剪提醒</span></h2><div id="pruneTips"></div></article>
         </div>
       </section>
 
       <section id="plants" class="view">
         <div class="card">
-          <div class="card-head"><h2>植物档案</h2><button id="addPlantBtn" class="primary">添加植物</button></div>
+          <div class="card-head"><h2><span data-i18n="plant_archive">植物档案</span></h2><button id="addPlantBtn" class="primary"><span data-i18n="add_plant">添加植物</span></button></div>
           <div class="filters" id="groupFilters"></div>
         </div>
         <div id="plantCards" class="plant-grid"></div>
       </section>
 
       <section id="map" class="view">
-        <article class="card"><h2>花园地图</h2><p class="muted">按区域查看植物。点击植物卡片可进入详情。</p><div id="gardenMap" class="map-grid"></div></article>
+        <article class="card"><h2><span data-i18n="garden_map">花园地图</span></h2><p class="muted"><span data-i18n="map_desc">按区域查看植物。点击植物卡片可进入详情。</span></p><div id="gardenMap" class="map-grid"></div></article>
       </section>
 
       <section id="timeline" class="view">
         <article class="card">
-          <div class="card-head"><h2>成长时间轴</h2><button id="addLogBtn" class="primary">添加日志</button></div>
+          <div class="card-head"><h2><span data-i18n="timeline">成长时间轴</span></h2><button id="addLogBtn" class="primary"><span data-i18n="add_log">添加日志</span></button></div>
           <div id="timelineList" class="timeline"></div>
         </article>
       </section>
 
       <section id="niania" class="view">
         <article class="card niania-card">
-          <h2>Niania 巡园报告</h2>
+          <h2><span data-i18n="niania_report">Niania 巡园报告</span></h2>
           <p class="big">🐈</p>
           <div id="nianiaReport"></div>
-          <button id="addNianiaLog" class="primary">记录 Niania 今日巡视</button>
+          <button id="addNianiaLog" class="primary"><span data-i18n="add_niania">记录 Niania 今日巡视</span></button>
         </article>
       </section>
     </main>
@@ -80,7 +80,7 @@
 
   <dialog id="plantDialog">
     <form method="dialog" class="dialog-card" id="plantForm">
-      <h2 id="dialogTitle">添加植物</h2>
+      <h2 id="dialogTitle"><span data-i18n="add_plant">添加植物</span></h2>
       <input type="hidden" id="plantId" />
       <label>名称 <input id="plantName" required /></label>
       <label>英文/品种 <input id="plantSpecies" /></label>
