@@ -63,11 +63,27 @@ function recordAction(id,action){const p=state.plants.find(x=>x.id===id); const 
 window.openDetail=function(id){const p=state.plants.find(x=>x.id===id); const photos=state.photos[id]||[]; document.getElementById('plantDetail').innerHTML=`<h2>${p.name}${p.count>1?' ×'+p.count:''}</h2><p class="muted">${p.species||''}</p><span class="badge">${p.group}</span><span class="badge">需水：${p.water}</span><span class="badge">光照：${p.light||'未记录'}</span><span class="badge">猫友好：${p.cat==='safe'?'较安全':p.cat==='toxic'?'需避开':'谨慎'}</span><h3>养护记录</h3><p>上次浇水：${p.lastWatered||'未记录'}</p><p>上次施肥：${p.lastFertilized||'未记录'}</p><p>上次修剪：${p.lastPruned||'未记录'}</p><p>${p.notes||''}</p><div class="actions"><button onclick="recordAction('${p.id}','water')">记录浇水</button><button onclick="recordAction('${p.id}','fert')">记录施肥</button><button onclick="recordAction('${p.id}','prune')">记录修剪</button></div><h3>成长照片</h3><input type="file" accept="image/*" id="photoInput"><div class="photo-preview">${photos.map(src=>`<img src="${src}">`).join('')}</div>`; document.getElementById('detailDialog').showModal(); document.getElementById('photoInput').onchange=e=>{const file=e.target.files[0]; if(!file)return; const reader=new FileReader(); reader.onload=()=>{(state.photos[id]??=[]).push(reader.result); state.logs.push({date:iso(today),title:`${p.name}新增照片`,text:'已添加成长照片。'}); save();openDetail(id);}; reader.readAsDataURL(file);};}
 document.getElementById('closeDetail').onclick=()=>document.getElementById('detailDialog').close();
 document.getElementById('addPlantBtn').onclick=()=>{document.getElementById('plantForm').reset();document.getElementById('plantId').value='';document.getElementById('plantDialog').showModal();}
-document.getElementById('plantForm').onsubmit=e=>{e.preventDefault(); const id=document.getElementById('plantId').value||('plant-'+Date.now()); const p={id,name:plantName.value,species:plantSpecies.value,group:plantGroup.value,count:+plantCount.value||1,water:plantWater.value,light:plantLight.value,notes:plantNotes.value,lastWatered:null,health:90,cat:'caution'}; state.plants.push(p); state.logs.push({date:iso(today),title:`新增植物：${p.name}`,text:`已加入${p.group}。`}); save();document.getElementById('plantDialog').close();renderAll();}
+document.getElementById('plantForm').onsubmit=e=>{e.preventDefault(); const id=document.getElementById('plantId').value||('plant-'+Date.now()); const p={id:id,name:document.getElementById('plantName').value,species:document.getElementById('plantSpecies').value,group:document.getElementById('plantGroup').value,count:+document.getElementById('plantCount').value||1,water:document.getElementById('plantWater').value,light:document.getElementById('plantLight').value,notes:document.getElementById('plantNotes').value,lastWatered:null,health:90,cat:'caution'}; state.plants.push(p); state.logs.push({date:iso(today),title:`新增植物：${p.name}`,text:`已加入${p.group}。`}); save();document.getElementById('plantDialog').close();renderAll();}
 document.getElementById('addLogBtn').onclick=()=>document.getElementById('logDialog').showModal();
-document.getElementById('logForm').onsubmit=e=>{e.preventDefault();state.logs.push({date:iso(today),title:logTitle.value,text:logText.value});save();document.getElementById('logDialog').close();renderTimeline();}
+document.getElementById('logForm').onsubmit=e=>{e.preventDefault();state.logs.push({date:iso(today),title:document.getElementById('logTitle').value,text:document.getElementById('logText').value});save();document.getElementById('logDialog').close();renderTimeline();}
 document.getElementById('addNianiaLog').onclick=()=>{state.niania.push({date:iso(today),text:'Niania 今日完成巡园。'});save();renderNiania();}
 document.getElementById('markDiary').onclick=()=>{state.logs.push({date:iso(today),title:'今日巡园完成',text:'已查看天气、浇水、施肥和修剪提醒。'});save();renderTimeline();alert('已记录今日巡园。')}
 document.getElementById('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='garden-diary-backup-'+iso(today)+'.json'; a.click();}
 document.getElementById('refreshWeather').onclick=renderWeather;
+
+function switchView(view){
+  document.querySelectorAll('.view').forEach(function(section){
+    section.classList.toggle('active', section.id === view);
+  });
+  document.querySelectorAll('.tab').forEach(function(tab){
+    tab.classList.toggle('active', tab.dataset.view === view);
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+document.querySelectorAll('.tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    switchView(tab.dataset.view);
+  });
+});
+
 renderAll();

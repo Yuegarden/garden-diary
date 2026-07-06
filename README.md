@@ -1,3 +1,3 @@
-# Garden Diary by Yue
+# Yue Garden Diary v3.1
 
-Static PWA for Yue's garden care notes. Upload these files to GitHub repository root or Cloudflare static assets.
+修复：顶部标签页点击切换。
