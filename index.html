@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Garden Diary by Yue</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Yue's Garden</p>
+        <h1>Garden Diary</h1>
+        <p id="todayText" class="sub"></p>
+      </div>
+      <button id="exportBtn" class="ghost">导出备份</button>
+    </header>
+
+    <nav class="tabs" aria-label="主导航">
+      <button class="tab active" data-view="dashboard">今日</button>
+      <button class="tab" data-view="plants">植物</button>
+      <button class="tab" data-view="map">地图</button>
+      <button class="tab" data-view="timeline">日志</button>
+      <button class="tab" data-view="niania">Niania</button>
+    </nav>
+
+    <main>
+      <section id="dashboard" class="view active">
+        <div class="grid two">
+          <article class="card weather-card">
+            <div class="card-head"><h2>今日天气｜Ripley</h2><button id="refreshWeather" class="small">刷新</button></div>
+            <div id="weatherBox" class="weather-box">正在获取天气...</div>
+          </article>
+          <article class="card">
+            <h2>今日重点</h2>
+            <ul id="highlights" class="pretty-list"></ul>
+          </article>
+        </div>
+        <article class="card">
+          <div class="card-head"><h2>今日养护任务</h2><button id="markDiary" class="small">记录今日巡园</button></div>
+          <div id="taskList" class="tasks"></div>
+        </article>
+        <div class="grid two">
+          <article class="card"><h2>本周施肥提醒</h2><div id="fertilizerTips"></div></article>
+          <article class="card"><h2>本周修剪提醒</h2><div id="pruneTips"></div></article>
+        </div>
+      </section>
+
+      <section id="plants" class="view">
+        <div class="card">
+          <div class="card-head"><h2>植物档案</h2><button id="addPlantBtn" class="primary">添加植物</button></div>
+          <div class="filters" id="groupFilters"></div>
+        </div>
+        <div id="plantCards" class="plant-grid"></div>
+      </section>
+
+      <section id="map" class="view">
+        <article class="card"><h2>花园地图</h2><p class="muted">按区域查看植物。点击植物卡片可进入详情。</p><div id="gardenMap" class="map-grid"></div></article>
+      </section>
+
+      <section id="timeline" class="view">
+        <article class="card">
+          <div class="card-head"><h2>成长时间轴</h2><button id="addLogBtn" class="primary">添加日志</button></div>
+          <div id="timelineList" class="timeline"></div>
+        </article>
+      </section>
+
+      <section id="niania" class="view">
+        <article class="card niania-card">
+          <h2>Niania 巡园报告</h2>
+          <p class="big">🐈</p>
+          <div id="nianiaReport"></div>
+          <button id="addNianiaLog" class="primary">记录 Niania 今日巡视</button>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="plantDialog">
+    <form method="dialog" class="dialog-card" id="plantForm">
+      <h2 id="dialogTitle">添加植物</h2>
+      <input type="hidden" id="plantId" />
+      <label>名称 <input id="plantName" required /></label>
+      <label>英文/品种 <input id="plantSpecies" /></label>
+      <label>区域
+        <select id="plantGroup">
+          <option>前院</option><option>侧院</option><option>室内</option><option>果园</option><option>草坪</option>
+        </select>
+      </label>
+      <label>数量 <input id="plantCount" type="number" min="1" value="1" /></label>
+      <label>需水
+        <select id="plantWater"><option>低</option><option selected>中</option><option>高</option></select>
+      </label>
+      <label>光照 <input id="plantLight" placeholder="全日照 / 半日照 / 明亮散射光" /></label>
+      <label>备注 <textarea id="plantNotes" rows="3"></textarea></label>
+      <div class="dialog-actions"><button value="cancel" class="ghost">取消</button><button id="savePlant" value="default" class="primary">保存</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="detailDialog">
+    <div class="dialog-card detail">
+      <button id="closeDetail" class="close">×</button>
+      <div id="plantDetail"></div>
+    </div>
+  </dialog>
+
+  <dialog id="logDialog">
+    <form method="dialog" class="dialog-card" id="logForm">
+      <h2>添加成长日志</h2>
+      <label>标题 <input id="logTitle" required /></label>
+      <label>内容 <textarea id="logText" rows="4"></textarea></label>
+      <div class="dialog-actions"><button value="cancel" class="ghost">取消</button><button value="default" class="primary">保存</button></div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
